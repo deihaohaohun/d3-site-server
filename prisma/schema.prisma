@@ -16,15 +16,22 @@ enum VideoType {
   Movie
 }
 
+enum VideoStatus {
+  Doing
+  Todo
+  Done
+}
+
 model Video {
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  title      String    @unique
+  id         String      @id @default(auto()) @map("_id") @db.ObjectId
+  title      String      @unique
   cover      String
-  createdAt  DateTime  @default(now())
+  createdAt  DateTime    @default(now())
   finishedAt DateTime?
   type       VideoType
   total      Int
-  current    Int       @default(0)
+  current    Int         @default(0)
+  status     VideoStatus @default(Doing)
   historys   History[]
 }
 
