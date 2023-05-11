@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { VideosService } from './videos.service';
 import { Prisma } from '@prisma/client';
 
@@ -15,5 +15,10 @@ export class VideosController {
   async addVideo(@Body() video: Prisma.VideoCreateInput) {
     let createdVideo = await this.video.createVideo(video);
     return createdVideo;
+  }
+
+  @Put(':videoId')
+  async addVideoHistory(@Param('videoId') videoId: string) {
+    await this.video.createVideoHistory(videoId);
   }
 }
