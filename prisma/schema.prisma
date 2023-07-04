@@ -31,7 +31,7 @@ model Video {
   type       VideoType
   total      Int
   current    Int         @default(0)
-  status     VideoStatus @default(Doing)
+  status     VideoStatus @default(Todo)
   historys   History[]
 }
 

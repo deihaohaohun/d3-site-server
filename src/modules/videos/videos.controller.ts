@@ -6,9 +6,9 @@ import { Prisma } from '@prisma/client';
 export class VideosController {
   constructor(private video: VideosService) {}
 
-  @Get('')
-  async readAllVideos() {
-    return this.video.readAllVideos();
+  @Get(':status')
+  async readAllVideos(@Param('status') status) {
+    return this.video.readAllVideos(status);
   }
 
   @Post('')
@@ -20,5 +20,10 @@ export class VideosController {
   @Put(':videoId')
   async addVideoHistory(@Param('videoId') videoId: string) {
     await this.video.createVideoHistory(videoId);
+  }
+
+  @Put('start/:videoId')
+  async startVideo(@Param('videoId') videoId: string) {
+    await this.video.startVideo(videoId);
   }
 }

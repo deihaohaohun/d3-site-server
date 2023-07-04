@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
-import { Video, Prisma } from '@prisma/client';
+import { Video, Prisma, VideoStatus } from '@prisma/client';
 
 @Injectable()
 export class VideosService {
@@ -26,7 +26,23 @@ export class VideosService {
     });
   }
 
-  async readAllVideos(): Promise<Video[]> {
-    return this.prisma.video.findMany();
+  async readAllVideos(status: VideoStatus = 'Doing'): Promise<Video[]> {
+    return this.prisma.video.findMany({
+      where: {
+        status,
+      },
+    });
+  }
+
+  async startVideo(id: string) {
+    return this.prisma.video.update({
+      where: {
+        id,
+      },
+      data: {
+        status: 'Doing',
+        current: 1,
+      },
+    });
   }
 }
