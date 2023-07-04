@@ -26,4 +26,9 @@ export class VideosController {
   async startVideo(@Param('videoId') videoId: string) {
     await this.video.startVideo(videoId);
   }
+
+  @Put('finish/:videoId')
+  async finishVideo(@Param('videoId') videoId: string) {
+    await this.video.finishVideo(videoId);
+  }
 }

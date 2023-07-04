@@ -45,4 +45,16 @@ export class VideosService {
       },
     });
   }
+
+  async finishVideo(id: string) {
+    return this.prisma.video.update({
+      where: { id },
+      data: {
+        status: 'Done',
+        historys: {
+          create: {},
+        },
+      },
+    });
+  }
 }
