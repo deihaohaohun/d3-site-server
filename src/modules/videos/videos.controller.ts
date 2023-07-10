@@ -13,7 +13,7 @@ export class VideosController {
 
   @Post('')
   async addVideo(@Body() video: Prisma.VideoCreateInput) {
-    let createdVideo = await this.video.createVideo(video);
+    const createdVideo = await this.video.createVideo(video);
     return createdVideo;
   }
 
