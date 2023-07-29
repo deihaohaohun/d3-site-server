@@ -31,4 +31,9 @@ export class VideosController {
   async finishVideo(@Param('videoId') videoId: string) {
     await this.video.finishVideo(videoId);
   }
+
+  @Get('date/:date')
+  async readVideosByDate(@Param('date') date: string) {
+    return this.video.readVideosByDate(date);
+  }
 }

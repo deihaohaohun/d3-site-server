@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { Video, Prisma, VideoStatus } from '@prisma/client';
+import * as dayjs from 'dayjs';
 
 @Injectable()
 export class VideosService {
@@ -55,6 +56,35 @@ export class VideosService {
           create: {},
         },
       },
+    });
+  }
+
+  async readVideosByDate(dateStr: string) {
+    const start = dayjs(dateStr + ' 00:00:00');
+    const end = dayjs(dateStr + ' 23:59:59');
+    const counts = await this.prisma.history.groupBy({
+      where: {
+        when: {
+          gt: start.toDate(),
+          lt: end.toDate(),
+        },
+      },
+      by: ['videoId'],
+      _count: true,
+    });
+    const ids = counts.map((temp) => temp.videoId);
+    const videos = await this.prisma.video.findMany({
+      where: {
+        id: {
+          in: ids,
+        },
+      },
+    });
+
+    return videos.map((v) => {
+      const id = v.id;
+      const count = counts.find((c) => c.videoId === id)._count;
+      return { ...v, count };
     });
   }
 }
