@@ -1,10 +1,15 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { VideosService } from './videos.service';
 import { Prisma } from '@prisma/client';
 
 @Controller('videos')
 export class VideosController {
   constructor(private video: VideosService) {}
+
+  @Get()
+  async getUnique(@Query('ids') ids) {
+    return this.video.findUnique(ids);
+  }
 
   @Get(':status')
   async readAllVideos(@Param('status') status) {
