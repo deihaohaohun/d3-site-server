@@ -6,7 +6,7 @@ export class HistoriesController {
   constructor(private history: HirtoriesService) {}
 
   @Get()
-  async readAllVideos() {
+  async readAllHistories() {
     return this.history.getAllHistories();
   }
 }
