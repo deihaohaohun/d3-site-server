@@ -7,6 +7,16 @@ import * as dayjs from 'dayjs';
 export class VideosService {
   constructor(private prisma: PrismaService) {}
 
+  async findUnique(ids: string[]): Promise<Video[]> {
+    return this.prisma.video.findMany({
+      where: {
+        id: {
+          in: ids,
+        },
+      },
+    });
+  }
+
   async createVideoHistory(videoId: string) {
     return this.prisma.video.update({
       where: { id: videoId },
