@@ -10,6 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// 哔哩历史
 enum VideoType {
   Bangumi
   Documentary
@@ -42,9 +43,32 @@ model History {
   videoId String   @db.ObjectId
 }
 
+// 账户匣
 model Account {
   id       String @id @default(auto()) @map("_id") @db.ObjectId
   title    String @unique
   account  String
   password String
+}
+
+// 艾宾浩斯笔记
+model Note {
+  id       String      @id @default(auto()) @map("_id") @db.ObjectId
+  title    String
+  current  Int         @default(1)
+  nextTime DateTime
+  images   NoteImage[]
+}
+
+model NoteImage {
+  id     String        @id @default(auto()) @map("_id") @db.ObjectId
+  url    String
+  Note   Note?         @relation(fields: [noteId], references: [id])
+  noteId String?       @db.ObjectId
+  type   NoteImageType
+}
+
+enum NoteImageType {
+  PREVIEW
+  CONTENT
 }
