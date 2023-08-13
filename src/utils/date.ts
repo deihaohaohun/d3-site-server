@@ -28,7 +28,7 @@ export function getAbhsDates(prevDate: Date, current: number) {
     [90, 'd'],
     [180, 'd'],
   ];
-  const [count, unit] = map[current - 1];
+  const [count, unit] = map[current];
   date = date.add(count, unit);
 
   return date;
