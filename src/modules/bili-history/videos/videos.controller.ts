@@ -7,7 +7,10 @@ export class VideosController {
   constructor(private video: VideosService) {}
 
   @Get()
-  async getUnique(@Query('ids') ids) {
+  async getUnique(@Query('ids') ids: string | string[]) {
+    if (typeof ids === 'string') {
+      ids = [ids];
+    }
     return this.video.findUnique(ids);
   }
 
